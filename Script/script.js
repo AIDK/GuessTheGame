@@ -2,7 +2,6 @@
 
 const setDisplayMessage = function (control, value) {
 	document.querySelector(`${control}`).textContent = value;
-	console.log(`${control}`, value, secretNumber);
 };
 
 const setPlayerScore = function (score) {
@@ -17,11 +16,9 @@ const setNumberControlWidth = function (value) {
 	document.querySelector('.number').style.width = value;
 };
 
-document.querySelector('.check').addEventListener('click', function () {
-	const userInput = Number(document.querySelector('.guess').value);
-
+const Process = function (userInput) {
 	if (!userInput) {
-		// no guescalculatePlayerScore
+		// no guess
 		setDisplayMessage('.message', '⛔ No Number!');
 	} else if (userInput === secretNumber) {
 		// guess was correct!
@@ -49,10 +46,9 @@ document.querySelector('.check').addEventListener('click', function () {
 			setPlayerScore(0);
 		}
 	}
-});
+};
 
-document.querySelector('.again').addEventListener('click', function () {
-	// reset game
+const ResetGame = function () {
 	score = 20;
 	secretNumber = generateSecretNumber();
 	setPlayerScore(score);
@@ -61,4 +57,12 @@ document.querySelector('.again').addEventListener('click', function () {
 	setGameBackgroundColor('#222');
 	setNumberControlWidth('15rem');
 	document.querySelector('.guess').value = '';
+};
+
+document.querySelector('.check').addEventListener('click', function () {
+	Process(Number(document.querySelector('.guess').value));
+});
+
+document.querySelector('.again').addEventListener('click', function () {
+	ResetGame();
 });
